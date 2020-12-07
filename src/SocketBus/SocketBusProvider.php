@@ -19,6 +19,13 @@ class SocketBusProvider extends ServiceProvider
                 return new SocketBusLaravelDriver($settings);
             });
         });
+
+        $this->app->singleton(SocketBusLaravelDriver::class, function($app) {
+            $settings = config('broadcasting.connections.socketbus');
+            return new SocketBusLaravelDriver($settings);
+        });
+
+        $this->app->alias(SocketBusLaravelDriver::class, 'socketbus');
     }
 
     /**

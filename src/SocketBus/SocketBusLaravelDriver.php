@@ -125,4 +125,42 @@ class SocketBusLaravelDriver extends Broadcaster
 
         return true;
     }
+
+
+    /**
+     * Gets the status of the application
+     * 
+     */
+    public function getStatus()
+    {
+        return $this->socketBus->getStatus();
+    }
+
+    /**
+     * Lists all the channels
+     * 
+     */
+    public function getChannels()
+    {
+        return $this->socketBus->getChannels();
+    }
+
+    /**
+     * Gets the total users in a channel
+     * 
+     */
+    public function getCountUsersInChannel(string $channelName)
+    {
+        return $this->socketBus->getCountUsersInChannel($channelName);
+    }
+
+
+    /**
+     * Get all users information in a given channel
+     * 
+     */
+    public function getChannelUsers(string $channelName)
+    {
+        return $this->socketBus->getChannelUsers($channelName);
+    }
 }
