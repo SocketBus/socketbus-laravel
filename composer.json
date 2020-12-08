@@ -15,7 +15,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.0",
-        "socketbus/socketbus-php": "master"
+        "socketbus/socketbus-php": "^1.0"
     },
     "repositories": [
         {
