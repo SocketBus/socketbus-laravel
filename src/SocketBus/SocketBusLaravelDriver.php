@@ -164,6 +164,10 @@ class SocketBusLaravelDriver extends Broadcaster
         return $this->socketBus->getChannelUsers($channelName);
     }
 
+    /**
+     * Authenticates an incoming webhook using the $request variable
+     * @param $request
+     */
     public function authWebhook($request)
     {
         return $request->header('authorization') && $this->socketBus->authWebhook($request->header('authorization'));
