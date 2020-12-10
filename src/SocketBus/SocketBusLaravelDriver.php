@@ -163,4 +163,9 @@ class SocketBusLaravelDriver extends Broadcaster
     {
         return $this->socketBus->getChannelUsers($channelName);
     }
+
+    public function authWebhook($request)
+    {
+        return $request->header('authorization') && $this->socketBus->authWebhook($request->header('authorization'));
+    }
 }
