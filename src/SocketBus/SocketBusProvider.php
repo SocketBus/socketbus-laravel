@@ -4,6 +4,7 @@ namespace SocketBus;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Broadcasting\BroadcastManager;
+use SocketBus\Middlewares\SocketBusWebhookMiddleware;
 
 class SocketBusProvider extends ServiceProvider
 {
@@ -26,6 +27,8 @@ class SocketBusProvider extends ServiceProvider
         });
 
         $this->app->alias(SocketBusLaravelDriver::class, 'socketbus');
+
+        $this->app['router']->aliasMiddleware('socketbus:webhook', SocketBusWebhookMiddleware::class);
     }
 
     /**
