@@ -87,7 +87,7 @@ class SocketBusLaravelDriver extends Broadcaster
      */
     public function validAuthenticationResponse($request, $result)
     {
-        if (strpos($request->channel_name, 'private-') === 0 || strpos($request->channel_name, 'presence-') === 0 || strpos($request->channel_name, 'public-') === 0) {
+        if (strpos($request->channel_name, 'private-') === 0 || strpos($request->channel_name, 'public-') === 0) {
             return $this->socketBus->auth(
                 $request->socket_id, 
                 $request->channel_name,
@@ -95,12 +95,14 @@ class SocketBusLaravelDriver extends Broadcaster
             );
         }
 
-        return $this->socketBus->authPresence(
-            $request->socket_id, 
-            $request->channel_name, 
-            $this->getUserId($request),
-            $result
-        );
+        if (strpos($request->channel_name, 'presence-') === 0) {
+            return $this->socketBus->authPresence(
+                $request->socket_id, 
+                $request->channel_name, 
+                $this->getUserId($request),
+                $result
+            );
+        }
     }
 
     /**
