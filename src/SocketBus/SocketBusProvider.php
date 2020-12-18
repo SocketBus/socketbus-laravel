@@ -4,7 +4,6 @@ namespace SocketBus;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Broadcasting\BroadcastManager;
-use SocketBus\Middlewares\SocketBusWebhookMiddleware;
 
 class SocketBusProvider extends ServiceProvider
 {
@@ -28,7 +27,15 @@ class SocketBusProvider extends ServiceProvider
 
         $this->app->alias(SocketBusLaravelDriver::class, 'socketbus');
 
-        $this->app['router']->aliasMiddleware('socketbus:webhook', SocketBusWebhookMiddleware::class);
+        $this->app['router']->aliasMiddleware('socketbus:webhook', function($request, $next) {
+            $socketBus = app()->make('socketbus');
+        
+            if (!$socketBus->authWebhook($request)) {
+                abort(401, 'Invalid webhook token');
+            }
+
+            return $next($request);
+        });
     }
 
     /**
