@@ -117,7 +117,15 @@ class SocketBusLaravelDriver extends Broadcaster
     {
         $formatted_channels = $this->formatChannels($channels);
 
-        $response = $this->socketBus->broadcast($formatted_channels, $event, $payload);
+        $options = [];
+
+        if (isset($payload['ignoreUsers'])) {
+            $options['i'] = $payload['ignoreUsers'];
+
+            unset($payload['ignoreUsers']);
+        }
+
+        $response = $this->socketBus->broadcast($formatted_channels, $event, $payload, $options);
 
         if ($response !== true) {
             throw new BroadcastException(
